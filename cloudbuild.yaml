@@ -1,0 +1,26 @@
+# Cloud Build config: builds a single image tagged with the short commit SHA
+# and pushes it to Artifact Registry. The same image is then fanned out to
+# every Cloud Run Job via scripts/deploy_jobs.sh.
+#
+# Placeholders to replace:
+#   <YOUR_REGION>          e.g. us-central1
+#   <YOUR_PROJECT>         GCP project id
+#   <YOUR_AR_REPO>         Artifact Registry repo name
+#   <YOUR_IMAGE_NAME>      e.g. etl-collector
+
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "-t"
+      - "<YOUR_REGION>-docker.pkg.dev/<YOUR_PROJECT>/<YOUR_AR_REPO>/<YOUR_IMAGE_NAME>:${SHORT_SHA}"
+      - "-t"
+      - "<YOUR_REGION>-docker.pkg.dev/<YOUR_PROJECT>/<YOUR_AR_REPO>/<YOUR_IMAGE_NAME>:latest"
+      - "."
+
+images:
+  - "<YOUR_REGION>-docker.pkg.dev/<YOUR_PROJECT>/<YOUR_AR_REPO>/<YOUR_IMAGE_NAME>:${SHORT_SHA}"
+  - "<YOUR_REGION>-docker.pkg.dev/<YOUR_PROJECT>/<YOUR_AR_REPO>/<YOUR_IMAGE_NAME>:latest"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
