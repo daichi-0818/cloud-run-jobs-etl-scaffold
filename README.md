@@ -1,5 +1,7 @@
 # cloud-run-jobs-etl-scaffold
 
+[![CI](https://github.com/daichi-0818/cloud-run-jobs-etl-scaffold/actions/workflows/ci.yml/badge.svg)](https://github.com/daichi-0818/cloud-run-jobs-etl-scaffold/actions/workflows/ci.yml)
+
 A minimal scaffold for running several related, scheduled ETL jobs as
 **one Docker image deployed to N Cloud Run Jobs**, each job pinned to a
 different mode via an environment variable. Grew out of the pattern of
